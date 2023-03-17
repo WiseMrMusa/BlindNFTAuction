@@ -13,6 +13,7 @@ contract BlindNFTAuction is ERC721("","") {
     event AuctionStarted(address indexed nftOwner, address nftContractAddress, uint256 tokenID, uint256 period);
     event BidforNFT(address);
     event WithdrawBidNFT(address);
+    event Winner();
 
     struct NFTAuction {
         address payable nftOwner;
@@ -90,6 +91,10 @@ contract BlindNFTAuction is ERC721("","") {
         require(msg.sender == nftAuctionDetails[_nftContractAddress][_nftTokenID].nftOwner, "Only owner can end bid");
         Bid memory winner = getHighestBidder(_nftContractAddress,_nftTokenID);
         IERC721(_nftContractAddress).transferFrom(address(this),winner.bidder,_nftTokenID);
+        emit Winner();
     }
 
+    function myBidForNFT(address _nftContractAddress, uint256 _nftTokenID) public view returns (uint256) {
+        return bidInformation[_nftContractAddress][_nftTokenID][msg.sender].bid;
+    }
 }

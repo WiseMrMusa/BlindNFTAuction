@@ -60,4 +60,20 @@ contract BlindNFTAuctionTest is Test {
         blindNFTAuction.getHighestBidder(address(myNFT),1);
         blindNFTAuction.endBid(address(myNFT),1);
     }
+    function testMyBid() public {
+        AuctionNFT();
+        placeBid(address(0x01), 0.08 ether);
+        vm.prank(address(0x01));
+        blindNFTAuction.myBidForNFT(address(myNFT),1);
+        placeBid(address(0x02), 0.09 ether);
+        vm.prank(address(0x01));
+        blindNFTAuction.myBidForNFT(address(myNFT),1);
+        placeBid(address(0x03), 0.10 ether);
+        vm.prank(address(0x01));
+        blindNFTAuction.myBidForNFT(address(myNFT),1);
+        placeBid(address(0x04), 29.9 ether);
+        vm.prank(address(0x01));
+        blindNFTAuction.myBidForNFT(address(myNFT),1);
+        blindNFTAuction.getHighestBidder(address(myNFT),1);
+    }
 }
