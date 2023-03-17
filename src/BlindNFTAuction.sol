@@ -71,6 +71,7 @@ contract BlindNFTAuction is ERC721("","") {
         emit WithdrawBidNFT(msg.sender);
     }
 
+    // This will be changed to internal later
     function getHighestBidder(address _nftContractAddress, uint256 _nftTokenID) public view returns (Bid memory) {
         Bid memory agbaBidder;
         uint256 nftBiddersLength = nftBidders[_nftContractAddress][_nftTokenID].length;
@@ -85,21 +86,11 @@ contract BlindNFTAuction is ERC721("","") {
         return agbaBidder;
     }
 
-    // function getHighestBidder() public view returns (Bid memory) {
-    //     Bid memory agbaBidder;
-    //     uint256 nftContractAddressLength = nftContractAddress.length;
-    //     for (uint256 i; i < nftContractAddressLength; i++){
-    //         address thisNFTContract = nftContractAddress[i];
-    //         uint256 thisNFTAddressLength = tokenIDperAddress[thisNFTContract].length;
-    //         for (uint256 j; j < thisNFTAddressLength; j++){
-    //             uint256 thisTokenID = tokenIDperAddress[thisNFTContract][j];
-    //             Bid memory Bidder =  bidInformation[thisNFTContract][thisTokenID][i];
-    //             if(Bidder.bid > agbaBidder.bid){
-    //                 agbaBidder = Bidder;
-    //             }
-    //         }
-    //     }
-    //     return agbaBidder;
-    // }
+    function endBid(address _nftContractAddress, uint256 _nftTokenID) public {
+        require(msg.sender == nftAuctionDetails[_nftContractAddress][_nftTokenID].nftOwner);
+        Bid memory winner = getHighestBidder(_nftContractAddress,_nftTokenID);
+        IERC721(_nftContractAddress).transferFrom(address(this),winner.bidder,_nftTokenID);
+        
+    }
 
 }
