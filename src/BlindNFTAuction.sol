@@ -65,10 +65,10 @@ contract BlindNFTAuction is ERC721("","") {
     function withdrawBid(address _nftContractAddress, uint256 _nftTokenID) public {
         NFTAuction storage bidNFT = nftAuctionDetails[_nftContractAddress][_nftTokenID];
         require(bidNFT.nftOwner != address(0), "This NFT is not for auction");
-        bidNFT.bidders.push(payable(msg.sender));
+        // bidNFT.bidders.push(payable(msg.sender));
         Bid storage myBid = bidInformation[_nftContractAddress][_nftTokenID][msg.sender];
-        require(myBid.bidder == payable(msg.sender), "Only bidder can withdraw!");
-        (payable(msg.sender)).transfer(myBid.bid);
+        require(myBid.bidder == msg.sender, "Only bidder can withdraw!");
+        payable(msg.sender).transfer(myBid.bid);
         emit WithdrawBidNFT(msg.sender);
     }
 
@@ -94,6 +94,13 @@ contract BlindNFTAuction is ERC721("","") {
         uint256 bid = bidInformation[_nftContractAddress][_nftTokenID][msg.sender].bid;
         (nftOwner).transfer(bid);
         emit Winner();
+        // uint256 totalNFTBidders = nftBidders[_nftContractAddress][_nftTokenID].length;
+        // address[] memory nftBidders_ = nftBidders[_nftContractAddress][_nftTokenID];
+        // for (uint256 i; i < totalNFTBidders; i++){
+        //     if (nftBidders_[i] != winner.bidder) {
+        //         payable(nftBidders_[i]).transfer(bidInformation[_nftContractAddress][_nftTokenID][nftBidders_[i]].bid);
+        //     }
+        // }
     }
 
     function myBidForNFT(address _nftContractAddress, uint256 _nftTokenID) public view returns (uint256) {
