@@ -82,7 +82,6 @@ contract BlindNFTAuction is ERC721("","") {
                 if(Bidder.bid > agbaBidder.bid){
                     agbaBidder = Bidder;
                 }
-                    // agbaBidder = Bidder;
         }
         return agbaBidder;
     }
@@ -91,6 +90,9 @@ contract BlindNFTAuction is ERC721("","") {
         require(msg.sender == nftAuctionDetails[_nftContractAddress][_nftTokenID].nftOwner, "Only owner can end bid");
         Bid memory winner = getHighestBidder(_nftContractAddress,_nftTokenID);
         IERC721(_nftContractAddress).transferFrom(address(this),winner.bidder,_nftTokenID);
+        address payable nftOwner = nftAuctionDetails[_nftContractAddress][_nftTokenID].nftOwner;
+        uint256 bid = bidInformation[_nftContractAddress][_nftTokenID][msg.sender].bid;
+        (nftOwner).transfer(bid);
         emit Winner();
     }
 

@@ -14,12 +14,15 @@ contract BlindNFTAuctionTest is Test {
 
     function setUp() public {
         blindNFTAuction = new BlindNFTAuction();
+        vm.startPrank(address(0x10));
         myNFT = new NFTContract("","");
-        myNFT.safeMint(address(this),1);
+        myNFT.safeMint(address(0x10),1);
         myNFT.approve(address(blindNFTAuction),1);
+        vm.stopPrank();
     }
 
     function AuctionNFT() public {
+        vm.prank(address(0x10));
         blindNFTAuction.AuctionNFT(address(myNFT),1,44950490459045);
     }
 
@@ -58,6 +61,7 @@ contract BlindNFTAuctionTest is Test {
         placeBid(address(0x03), 0.10 ether);
         placeBid(address(0x04), 29.9 ether);
         blindNFTAuction.getHighestBidder(address(myNFT),1);
+        vm.prank(address(0x10));
         blindNFTAuction.endBid(address(myNFT),1);
     }
     function testMyBid() public {
