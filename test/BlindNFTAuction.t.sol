@@ -45,14 +45,14 @@ contract BlindNFTAuctionTest is Test {
         placeBid(address(0x03), 0.10 ether);
         placeBid(address(0x04), 29.9 ether);
     }
-    function testGetHighestBidder() public {
-        AuctionNFT();
-        placeBid(address(0x01), 0.08 ether);
-        placeBid(address(0x02), 0.09 ether);
-        placeBid(address(0x03), 0.10 ether);
-        placeBid(address(0x04), 29.9 ether);
-        blindNFTAuction.getHighestBidder(address(myNFT),1);
-    }
+    // function testGetHighestBidder() public {
+    //     AuctionNFT();
+    //     placeBid(address(0x01), 0.08 ether);
+    //     placeBid(address(0x02), 0.09 ether);
+    //     placeBid(address(0x03), 0.10 ether);
+    //     placeBid(address(0x04), 29.9 ether);
+    //     blindNFTAuction.getHighestBidder(address(myNFT),1);
+    // }
 
     function testEndBid() public {
         AuctionNFT();
@@ -60,7 +60,7 @@ contract BlindNFTAuctionTest is Test {
         placeBid(address(0x02), 0.09 ether);
         placeBid(address(0x03), 0.10 ether);
         placeBid(address(0x04), 29.9 ether);
-        blindNFTAuction.getHighestBidder(address(myNFT),1);
+        // blindNFTAuction.getHighestBidder(address(myNFT),1);
         vm.prank(address(0x10));
         blindNFTAuction.endBid(address(myNFT),1);
     }
@@ -74,7 +74,7 @@ contract BlindNFTAuctionTest is Test {
         blindNFTAuction.myBidForNFT(address(myNFT),1);
         placeBid(address(0x04), 29.9 ether);
         blindNFTAuction.myBidForNFT(address(myNFT),1);
-        blindNFTAuction.getHighestBidder(address(myNFT),1);
+        // blindNFTAuction.getHighestBidder(address(myNFT),1);
     }
 
 

@@ -73,7 +73,7 @@ contract BlindNFTAuction is ERC721("","") {
     }
 
     // This will be changed to internal later
-    function getHighestBidder(address _nftContractAddress, uint256 _nftTokenID) public view returns (Bid memory) {
+    function getHighestBidder(address _nftContractAddress, uint256 _nftTokenID) internal view returns (Bid memory) {
         Bid memory agbaBidder;
         uint256 nftBiddersLength = nftBidders[_nftContractAddress][_nftTokenID].length;
         address[] memory nftBiddders = nftBidders[_nftContractAddress][_nftTokenID];
