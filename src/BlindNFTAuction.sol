@@ -56,7 +56,7 @@ contract BlindNFTAuction is ERC721("","") {
         require(bidNFT.auctionEndTime > block.timestamp, "The auction has ended");
         bidNFT.bidders.push(payable(msg.sender));
         Bid storage myBid = bidInformation[_nftContractAddress][_nftTokenID][msg.sender];
-        nftBidders[_nftContractAddress][_nftTokenID];
+        nftBidders[_nftContractAddress][_nftTokenID].push(msg.sender);
         myBid.bidder = payable(msg.sender);
         myBid.bid += msg.value;
         emit BidforNFT(msg.sender);
