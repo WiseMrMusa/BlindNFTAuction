@@ -12,7 +12,7 @@ contract BlindNFTAuction is ERC721("","") {
 
     event AuctionStarted(address indexed nftOwner, address nftContractAddress, uint256 tokenID, uint256 period);
     event BidforNFT(address);
-    event WithdrawBidNFT(address);
+    event WithdrawBidNFT(address, uint256);
     event Winner();
 
     struct NFTAuction {
@@ -67,10 +67,12 @@ contract BlindNFTAuction is ERC721("","") {
         require(bidNFT.nftOwner != address(0), "This NFT is not for auction");
         // bidNFT.bidders.push(payable(msg.sender));
         Bid storage myBid = bidInformation[_nftContractAddress][_nftTokenID][msg.sender];
+        uint256 tBid = myBid.bid;
         require(myBid.bidder == msg.sender, "Only bidder can withdraw!");
+        require(tBid > 0, "You don't have money here");
         myBid.bid = 0;
-        payable(msg.sender).transfer(myBid.bid);
-        emit WithdrawBidNFT(msg.sender);
+        payable(msg.sender).transfer(tBid);
+        emit WithdrawBidNFT(msg.sender, tBid);
     }
 
     // This will be changed to internal later

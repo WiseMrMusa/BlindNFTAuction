@@ -75,9 +75,19 @@ contract BlindNFTAuctionTest is Test {
     }
 
 
+    function testFailWithDrawBid() public {
+        testEndBid();
+        vm.prank(address(0x02));
+        blindNFTAuction.withdrawBid(address(myNFT),1);
+        vm.prank(address(0x02));
+        blindNFTAuction.withdrawBid(address(myNFT),1);
+    }
+
     function testWithDrawBid() public {
         testEndBid();
         vm.prank(address(0x02));
+        blindNFTAuction.withdrawBid(address(myNFT),1);
+        vm.prank(address(0x03));
         blindNFTAuction.withdrawBid(address(myNFT),1);
     }
 }
