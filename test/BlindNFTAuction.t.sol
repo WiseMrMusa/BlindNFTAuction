@@ -5,9 +5,6 @@ import "forge-std/Test.sol";
 import "../src/BlindNFTAuction.sol";
 import "./NFTContract.sol";
 
-
-
-
 contract BlindNFTAuctionTest is Test {
     BlindNFTAuction public blindNFTAuction;
     NFTContract public myNFT; 
